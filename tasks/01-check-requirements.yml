@@ -1,0 +1,45 @@
+---
+- name: Include roles' meta data
+  ansible.builtin.include_vars:
+    file: "{{ role_path }}/meta/main.yml"
+
+- name: Print OS and distro Ansible variables collected by setup
+  debug:
+    msg:
+      - "ansible_os_family: {{ ansible_os_family }}"
+      - "ansible_distribution: {{ ansible_distribution }}"
+      - "ansible_distribution_major_version: {{ ansible_distribution_major_version }}"
+      - "ansible_distribution_version: {{ ansible_distribution_version }}"
+      - "ansible_distribution_release: {{ ansible_distribution_release }}"
+
+- name: Set facts based on supported platforms
+  ansible.builtin.set_fact:
+    supported_distributions: "{{ galaxy_info.platforms | json_query('[].name') }}"
+
+- name: Distribution check
+  when: ansible_distribution not in supported_distributions
+  block:
+    - name: Print debug information if not supported
+      ansible.builtin.debug:
+        msg: "{{ ansible_distribution }} not supported. End of host."
+    - name: Print debug information if not supported
+      ansible.builtin.meta: end_host
+
+- name: Set facts based on supported platform versions
+  ansible.builtin.set_fact:
+    supported_releases: "{{ (galaxy_info.platforms |
+      selectattr('name', 'match', ansible_distribution) |
+      list | first).versions }}"
+
+- name: Version check
+  when: ansible_distribution_release not in supported_releases
+  block:
+    - name: Print debug information if not supported
+      ansible.builtin.debug:
+        msg: "{{ ansible_distribution_release }} not supported. End of host."
+    - name: Print debug information if not supported
+      ansible.builtin.meta: end_host
+
+- name: The distribution and release is supported. Continue play.
+  ansible.builtin.debug:
+    msg: "{{ ansible_distribution }} {{ ansible_distribution_release }} is supported. Continue play."

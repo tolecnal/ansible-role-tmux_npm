@@ -1,0 +1,18 @@
+---
+- name: Checking requirements for role
+  ansible.builtin.include_tasks: 01-check-requirements.yml
+
+- name: Load variables for Debian, if applicable
+  ansible.builtin.include_vars: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Running setup for Debian
+  ansible.builtin.include_tasks: 02-setup-debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Installing the TPM module
+  ansible.builtin.include_tasks: 03-tpm-debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Create the tmux configuration file
+  ansible.builtin.include_tasks: 04-create-tmux-config.yml

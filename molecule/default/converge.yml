@@ -1,0 +1,51 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    tmux_users:
+      - root
+    apt_packages:
+      - python3-jmespath
+      - git
+
+  pre_tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 600
+      changed_when: false
+      when: ansible_os_family == 'Debian'
+
+    - name: Install python3-jmespath
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+      changed_when: false
+      when: ansible_os_family == 'Debian'
+      with_items: "{{ apt_packages }}"
+
+  roles:
+    - role: tolecnal.tmux_tpm
+
+  post_tasks:
+    - name: Verify .tmux.conf exists
+      ansible.builtin.stat:
+        path: ~/.tmux.conf
+      register: conf_result
+
+    - name: File exists
+      ansible.builtin.debug:
+        msg: "tmux configuration file exists"
+      when: conf_result.stat.exists
+
+    - name: Verify that TPM is installed
+      ansible.builtin.stat:
+        path: ~/.tmux/plugins/tpm/tpm
+      register: tpm_result
+
+    - name: TPM is installed
+      ansible.builtin.debug:
+        msg: "TPM is installed"
+      when: tpm_result.stat.exists

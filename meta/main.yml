@@ -1,0 +1,29 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: tmux_tpm
+  namespace: tolecnal
+  author: "Jostein Elvaker Haande <tolecnal@tolecnal.net"
+  description: Role to install and configure tmux with tpm plugin manager and extras
+  license: "license (BSD, MIT)"
+  min_ansible_version: "2.13.0"
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+    - name: Debian
+      versions:
+        - bullseye
+        - bookworm
+    - name: MacOSX
+      versions:
+        - all
+
+  galaxy_tags:
+    - tmux
+    - console
+    - session
+    - screen

@@ -1,0 +1,76 @@
+# Ansible generated configuration file
+# Created from the ansible-role-tmux by tolecnal
+# Local configurations can be applied to ~/.tmux.conf.local
+# Settings in this file will be overwritten when role is run
+#
+# Generated: {{ ansible_date_time.iso8601 }}
+
+{% if tmux_enable_24bit_terminal %}
+# Enable 24 terminal for correct colours in i.e. neovim
+set-option -sa terminal-overrides ",xterm*:Tc"
+{% endif %}
+
+{% if tmux_enable_mouse %}
+# Enable mouse support
+set -g mouse on
+{% endif %}
+
+{% if tmux_prefix_key %}
+unbind C-b
+set -g prefix {{ tmux_prefix_key }}
+bind {{ tmux_prefix_key }} send-prefix
+{% endif %}
+
+{% if tmux_vim_style_panel_selection %}
+# Vim style pane selection
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+{% endif %}
+
+# Set status bar location
+set-option -g status-position {{ tmux_statusbar_location }}
+
+{% if tmux_window_and_pane_renumbering %}
+# Enable windows and panes renumbering, starting at 1, not 0
+set -g base-index 1
+set -g pane-base-index 1
+set-window-option -g pane-base-index 1
+set-option -g renumber-windows on
+{% endif %}
+
+{% if tmux_vi_mode %}
+# set vi-mode
+set-window-option -g mode-keys vi
+{% endif %}
+
+{% if tmux_vim_copy_mode %}
+# Enable vim copy mode
+bind-key -T copy-mode-vi v send-keys -X begin-selection
+bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+{% endif %}
+
+{% if tmux_custom_keybindings %}
+{{ tmux_custom_keybindings }}
+{% endif %}
+
+## REQUIRED PLUGIN ##
+set -g @plugin 'tmux-plugins/tpm'
+
+## TMUX PLUGINS ##
+{% if tmux_plugins %}
+{% for item in tmux_plugins.values() %}
+set -g @plugin '{{ item.name }}'
+{% if item.options %}
+{{ item.options}}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if tmux_custom_config %}
+if-shell "test -e ~/.tmux.conf.local" "source-file ~/.tmux.conf.local"
+{% endif %}
+
+run '~/.tmux/plugins/tpm/tpm'

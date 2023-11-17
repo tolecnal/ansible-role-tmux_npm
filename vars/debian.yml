@@ -1,0 +1,4 @@
+---
+
+tmux_config_location: "~/.tmux.conf"
+tmux_plugins_location: "~/.tmux/plugins"

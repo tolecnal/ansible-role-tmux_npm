@@ -1,0 +1,10 @@
+---
+
+- name: Generate and deploy the tmux config
+  become: true
+  become_user: "{{ item }}"
+  ansible.builtin.template:
+    src: tmux.conf.j2
+    dest: "{{ tmux_config_location }}"
+    mode: "0660"
+  with_items: "{{ tmux_users }}"

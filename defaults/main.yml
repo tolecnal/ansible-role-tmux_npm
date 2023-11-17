@@ -1,0 +1,39 @@
+---
+# List of users to run this role on
+tmux_users: []
+
+# Location of the TPM plugin on GitHub
+tmux_tpm_location: https://github.com/tmux-plugins/tpm
+
+# Enable 24bit terminal support for correct colours
+tmux_enable_24bit_terminal: true
+
+# Enable mouse support
+tmux_enable_mouse: true
+
+# Change the prefix key, away from CTRL + b
+tmux_prefix_key:
+
+# Enable VIM style window/panel selection
+tmux_vim_style_panel_selection: true
+
+# The location of the tmux statusbar
+tmux_statusbar_location: bottom
+
+# Enable renumbering of windows and panels, 0 becomes 1
+tmux_window_and_pane_renumbering: true
+
+# Enable VI mode
+tmux_vi_mode: true
+
+# Enable VIM copy mode
+tmux_vim_copy_mode: true
+
+# Enable support for custom configuration using ~/.tmux.conf.local
+tmux_custom_config: true
+
+# Add custom keybindings to ~/.tmux.conf
+tmux_custom_keybindings: []
+
+# The list of plugins to enable for tmux
+tmux_plugins: []

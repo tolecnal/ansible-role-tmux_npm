@@ -1,0 +1,21 @@
+---
+
+- name: Ensure tmux plugin folder exists
+  become: true
+  become_user: "{{ item }}"
+  ansible.builtin.file:
+    path: "{{ tmux_plugins_location }}"
+    state: directory
+    mode: "0770"
+  with_items: "{{ tmux_users }}"
+
+- name: Clone and install TPM for
+  become: true
+  become_user: "{{ item }}"
+  ansible.builtin.git:
+    repo: "{{ tmux_tpm_location }}"
+    dest: "{{ tmux_plugins_location }}/tpm"
+    update: true
+  with_items: "{{ tmux_users }}"
+  tags:
+    - skip_ansible_lint

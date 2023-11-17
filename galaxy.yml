@@ -1,0 +1,26 @@
+---
+namespace: tolecnal
+name: tmux
+version: "1.0.0"
+readme: README.md
+
+authors:
+  - "Jostein Elvaker Haande <tolecnal@tolecnal.net>"
+description: Deploy and configure TMUX with a sane configuration and plugins
+license:
+  - MIT
+
+tags:
+  - tmux
+  - console
+  - session
+  - screen
+  - tools
+  - linux
+
+repository: https://github.com/tolecnal/ansible-role-tmux
+documentation: https://github.com/tolecnal/ansible-role-tmux
+homepage: https://tolecnal.net
+issues: https://github.com/tolecnal/ansible-role-tmux/issues
+
+build_ignore: []
