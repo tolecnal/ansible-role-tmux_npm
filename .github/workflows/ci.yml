@@ -28,7 +28,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install APT packages
-        run: apt install python3-jmespath -y
+        run: sudo apt install python3-jmespath -y
 
       - name: Install test dependencies.
         run: pip3 install yamllint
@@ -62,7 +62,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install APT packages
-        run: apt install python3-jmespath -y
+        run: sudo apt install python3-jmespath -y
 
       - name: Install test dependencies.
         run: pip3 install ansible molecule molecule-plugins[docker] docker
