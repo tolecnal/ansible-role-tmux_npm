@@ -7,5 +7,5 @@
     src: tmux.conf.j2
     dest: "{{ tmux_config_location }}"
     mode: "0660"
-    force: no
+    force: false
   with_items: "{{ tmux_users }}"
