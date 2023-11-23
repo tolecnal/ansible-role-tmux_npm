@@ -4,7 +4,7 @@
     file: "{{ role_path }}/meta/main.yml"
 
 - name: Print OS and distro Ansible variables collected by setup
-  debug:
+  ansible.builtin.debug:
     msg:
       - "ansible_os_family: {{ ansible_os_family }}"
       - "ansible_distribution: {{ ansible_distribution }}"

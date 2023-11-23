@@ -27,12 +27,16 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Install APT packages
+        run: apt install python3-jmespath -y
+
       - name: Install test dependencies.
         run: pip3 install yamllint
 
       - name: Lint code.
         run: |
           yamllint .
+          ansible-lint .
 
   molecule:
     name: Molecule
@@ -56,6 +60,9 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.x"
+
+      - name: Install APT packages
+        run: apt install python3-jmespath -y
 
       - name: Install test dependencies.
         run: pip3 install ansible molecule molecule-plugins[docker] docker
