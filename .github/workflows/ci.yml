@@ -31,7 +31,7 @@ jobs:
         run: sudo apt install python3-jmespath -y
 
       - name: Install test dependencies.
-        run: pip3 install yamllint
+        run: pip3 install yamllint ansible ansible-lint
 
       - name: Lint code.
         run: |
